@@ -6,3 +6,7 @@ edition = "2024"
 [dependencies]
 rand = "0.9.2"
 svg = "0.18.0"
+
+[[bin]]
+name = "nails"
+path = "src/nails/bin/main.rs"

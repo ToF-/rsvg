@@ -1,3 +1,4 @@
+
 use rand::Rng; // provides the `random` method
 use std::f64::consts::PI;
 use svg::Document;
@@ -71,5 +72,5 @@ fn main() {
             y0 = rng.random::<f64>() * 1000.0;
         }
     }
-    svg::save("image.svg", &document).unwrap();
+    svg::save("images/nails.svg", &document).unwrap();
 }
