@@ -73,16 +73,15 @@ fn main() {
     let mut theta = THETA / 2.0;
     let mut document = Document::new()
         .set("viewBox", (0, 0, 1000, 1000));
+    let central_pentagon = pentagon(x0, y0, circum_radius, THETA / 2.0);
+    document = document.add(arcs_path(central_pentagon, side, "green"));
     for i in 0..5 {
         let pt = large_pentagon[i];
         let small_pentagon = pentagon(pt.0, pt.1, circum_radius, theta + THETA / 2.0);
-        document = document.add(lines_path(small_pentagon.clone(), "red"));
         let xt: Point = (pt.0 + in_radius * 2.0 * theta.cos(), pt.1 + in_radius * 2.0 * theta.sin());
         let extra_pentagon = pentagon(xt.0, xt.1, circum_radius, theta);
-        document = document.add(lines_path(extra_pentagon.clone(), "purple"));
         let yt: Point = (pt.0 + in_radius * 2.0 * (theta + THETA * 4.0 ).cos(), pt.1 + in_radius * 2.0 * (theta + THETA * 4.0).sin());
         let yxtra_pentagon = pentagon(yt.0, yt.1, circum_radius, theta);
-        document = document.add(lines_path(yxtra_pentagon.clone(), "blue"));
         theta += THETA;
         document = document.add(arcs_path(small_pentagon, side, "green"));
         document = document.add(arcs_path(extra_pentagon, side, "green"));
