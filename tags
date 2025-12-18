@@ -4,8 +4,8 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-distance	/Users/tof/Coding/rsvg/src/nails/bin/main.rs	/^fn distance(a: (f64, f64), b: (f64, f64)) -> f64 {$/;"	f
-main	/Users/tof/Coding/rsvg/src/nails/bin/main.rs	/^fn main() {$/;"	f
-make_circle	/Users/tof/Coding/rsvg/src/nails/bin/main.rs	/^fn make_circle(x: i64, y: i64, radius: i64) -> Circle {$/;"	f
-n	/Users/tof/Coding/rsvg/src/nails/bin/main.rs	/^    const n:usize = 5000;$/;"	c
-nail	/Users/tof/Coding/rsvg/src/nails/bin/main.rs	/^fn nail(x0: f64, y0: f64, l: f64, a: f64) -> Path {$/;"	f
+distance	/Users/christophethibaut/Coding/rsvg/src/nails/bin/main.rs	/^fn distance(a: (f64, f64), b: (f64, f64)) -> f64 {$/;"	f
+main	/Users/christophethibaut/Coding/rsvg/src/nails/bin/main.rs	/^fn main() {$/;"	f
+make_circle	/Users/christophethibaut/Coding/rsvg/src/nails/bin/main.rs	/^fn make_circle(x: i64, y: i64, radius: i64) -> Circle {$/;"	f
+n	/Users/christophethibaut/Coding/rsvg/src/nails/bin/main.rs	/^    const n:usize = 5000;$/;"	c
+nail	/Users/christophethibaut/Coding/rsvg/src/nails/bin/main.rs	/^fn nail(x0: f64, y0: f64, l: f64, a: f64) -> Path {$/;"	f
