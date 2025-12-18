@@ -10,3 +10,7 @@ svg = "0.18.0"
 [[bin]]
 name = "nails"
 path = "src/nails/bin/main.rs"
+
+[[bin]]
+name = "petals"
+path = "src/petals/bin/main.rs"
