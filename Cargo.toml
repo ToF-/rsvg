@@ -13,4 +13,4 @@ path = "src/nails/bin/main.rs"
 
 [[bin]]
 name = "petals"
-path = "src/petals/bin/main.rs"
+path = "src/petals/main.rs"
