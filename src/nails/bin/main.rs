@@ -51,12 +51,12 @@ fn distance(a: (f64, f64), b: (f64, f64)) -> f64 {
 
 
 fn main() {
-    const n:usize = 5000;
+    const N:usize = 5000;
     let mut rng = rand::rng(); // a local handle to the generator
     let mut document = Document::new().set("viewBox", (0, 0, 1000, 1000));
     let mut x0 = 500.0;
     let mut y0 = 500.0;
-    for _ in 0..n {
+    for _ in 0..N {
         let l = rng.random::<f64>() * 200.0 - 100.0;
         let a = rng.random::<f64>() * PI * 2.0;
         let x1 = x0 + l * f64::cos(a);
