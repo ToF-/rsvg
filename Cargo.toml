@@ -19,3 +19,7 @@ path = "src/petals/main.rs"
 name = "hexagrid"
 path = "src/hexagrid/main.rs"
 
+[[bin]]
+name = "shapegrid"
+path = "src/shapegrid/main.rs"
+
