@@ -4,7 +4,7 @@ use svg::node::element::Path;
 use svg::node::element::path::Data;
 use svg::node::element::Line;
 
-const MAX_EDGES: usize = 3;
+const MAX_EDGES: usize = 5;
 const MAX_STEPS: usize = 4;
 
 type Point = (f64, f64);
@@ -32,7 +32,6 @@ pub fn shape(xc: f64, yc: f64, length: f64, start_angle: f64) -> Vec<Vec<Point>>
         let dx = x1 - x0;
         let dy = y1 - y0;
         let d = f64::sqrt(dx*dx + dy*dy);
-        let s = d / MAX_STEPS as f64;
         pts.push((x0,y0));
         pts.push(mid_point((x0,y0),(x1,y1)));
         pts.push(mid_point((x0,y0),mid_point((x0,y0),(x1,y1))));
@@ -83,9 +82,11 @@ fn main() {
     document = document.add(line_path(global, "green"));
     for i in 0..MAX_EDGES {
         for j in 0..MAX_STEPS {
-            for k in 0..MAX_EDGES {
-            document = document.add(line(shape[i][j],shape[(i+k)%MAX_EDGES][(MAX_STEPS-j)%MAX_STEPS], "blue"));
-        }
+            for k in 0..MAX_STEPS {
+                for l in 0..MAX_EDGES {
+                    document = document.add(line(shape[i][j], shape[l][k], "blue"));
+                    }
+            }
         }
     }
     svg::save("images/shapegrid.svg", &document).unwrap();
