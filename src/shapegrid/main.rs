@@ -5,10 +5,16 @@ use svg::node::element::path::Data;
 use svg::node::element::Line;
 
 const MAX_EDGES: usize = 3;
-const MAX_STEPS: usize = 16;
+const MAX_STEPS: usize = 4;
 
 type Point = (f64, f64);
 
+
+pub fn mid_point(a: Point, b: Point) -> Point {
+    let x = a.0 + (b.0 - a.0) / 2.0;
+    let y = a.1 + (b.1 - a.1) / 2.0;
+    (x,y)
+}
 
 pub fn shape(xc: f64, yc: f64, length: f64, start_angle: f64) -> Vec<Vec<Point>> {
     let mut points: Vec<Vec<Point>> = vec![];
@@ -27,15 +33,12 @@ pub fn shape(xc: f64, yc: f64, length: f64, start_angle: f64) -> Vec<Vec<Point>>
         let dy = y1 - y0;
         let d = f64::sqrt(dx*dx + dy*dy);
         let s = d / MAX_STEPS as f64;
-        for i in 0..MAX_STEPS {
-            let x = x0 + (x1 - x0) + (i as f64) * s;
-            let y = y0 + (y1 - y0) + (i as f64) * s;
-            println!("{} {} {} {}", i, s, x, y);
-            pts.push((x, y));
-        }
+        pts.push((x0,y0));
+        pts.push(mid_point((x0,y0),(x1,y1)));
+        pts.push(mid_point((x0,y0),mid_point((x0,y0),(x1,y1))));
+        pts.push(mid_point(mid_point((x0,y0),(x1,y1)), (x1,y1)));
         alpha += THETA;
         points.push(pts);
-
     }
     points
 }
@@ -80,7 +83,7 @@ fn main() {
     document = document.add(line_path(global, "green"));
     for i in 0..MAX_EDGES {
         for j in 0..MAX_STEPS {
-            for k in 0..MAX_STEPS {
+            for k in 0..MAX_EDGES {
             document = document.add(line(shape[i][j],shape[(i+k)%MAX_EDGES][(MAX_STEPS-j)%MAX_STEPS], "blue"));
         }
         }
