@@ -10,21 +10,28 @@ const MAX_STEPS: usize = 16;
 type Point = (f64, f64);
 
 
-pub fn shape(x0: f64, y0: f64, length: f64, start_angle: f64) -> Vec<Vec<Point>> {
+pub fn shape(xc: f64, yc: f64, length: f64, start_angle: f64) -> Vec<Vec<Point>> {
     let mut points: Vec<Vec<Point>> = vec![];
     let mut alpha: f64 = start_angle;
     const THETA: f64 = (2.0 * PI) / MAX_EDGES as f64;
     for _ in 0..MAX_EDGES {
-        let pt = alpha.sin_cos();
+        let p = alpha.sin_cos();
+        let q = (alpha + THETA).sin_cos();
         let mut pts: Vec<Point> = vec![];
         let mut l: f64 = 0.0;
-        for _ in 0..MAX_STEPS {
-            let beta = alpha + PI - THETA;
-            let qt = beta.sin_cos();
-            let mut x = x0 + length * pt.1 + l * qt.1;
-            let mut y = y0 + length * pt.0 + l * qt.0;
+        let x0 = xc + length * p.1;
+        let y0 = yc + length * p.0;
+        let x1 = xc + length * q.1;
+        let y1 = yc + length * q.0;
+        let dx = x1 - x0;
+        let dy = y1 - y0;
+        let d = f64::sqrt(dx*dx + dy*dy);
+        let s = d / MAX_STEPS as f64;
+        for i in 0..MAX_STEPS {
+            let x = x0 + (x1 - x0) + (i as f64) * s;
+            let y = y0 + (y1 - y0) + (i as f64) * s;
+            println!("{} {} {} {}", i, s, x, y);
             pts.push((x, y));
-            l += length / MAX_STEPS as f64;
         }
         alpha += THETA;
         points.push(pts);
