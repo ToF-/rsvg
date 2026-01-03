@@ -4,8 +4,9 @@ use svg::node::element::Path;
 use svg::node::element::path::Data;
 use svg::node::element::Line;
 
-const MAX_EDGES: usize = 4;
+const MAX_EDGES: usize = 6;
 const MAX_STEPS: usize = 2;
+const LEVEL: u32 = 1;
 
 type Point = (f64, f64);
 
@@ -17,7 +18,7 @@ pub fn mid_point(a: Point, b: Point) -> Point {
 }
 
 
-pub fn mid_points(level: usize, a: Point, b: Point) -> Vec<Point> {
+pub fn mid_points(level: u32, a: Point, b: Point) -> Vec<Point> {
     let mut points: Vec<Point> = vec![];
     let m = mid_point(a, b);
     if level > 0 {
@@ -30,7 +31,7 @@ pub fn mid_points(level: usize, a: Point, b: Point) -> Vec<Point> {
     points
 }
 
-pub fn line_points(level: usize, a: Point, b: Point) ->Vec<Point> {
+pub fn line_points(level: u32, a: Point, b: Point) ->Vec<Point> {
     let mut points: Vec<Point> = vec![];
     points.push(a);
     points.append(&mut mid_points(level, a, b));
@@ -50,7 +51,7 @@ pub fn shape(xc: f64, yc: f64, length: f64, start_angle: f64) -> Vec<Vec<Point>>
         let y0 = yc + length * p.0;
         let x1 = xc + length * q.1;
         let y1 = yc + length * q.0;
-        let pts: Vec<Point> = line_points(2, (x0,y0), (x1,y1));
+        let pts: Vec<Point> = line_points(LEVEL, (x0,y0), (x1,y1));
         println!("{:?}", pts);
         alpha += THETA;
         points.push(pts);
@@ -95,16 +96,13 @@ fn main() {
     for i in 0..MAX_EDGES {
         global.push(shape[i][0]);
     }
+    let base: usize = 2;
+    let max_steps = base.pow(LEVEL + 1);
     document = document.add(line_path(global, "green"));
     for i in 0..MAX_EDGES {
-        document = document.add(line(shape[i][0], shape[(i+1)%MAX_EDGES][0], "blue"));
-        document = document.add(line(shape[i][1], shape[(i+1)%MAX_EDGES][1], "purple"));
-        document = document.add(line(shape[i][2], shape[(i+1)%MAX_EDGES][2], "red"));
-        document = document.add(line(shape[i][3], shape[(i+1)%MAX_EDGES][3], "orange"));
-        document = document.add(line(shape[i][4], shape[(i+1)%MAX_EDGES][4], "yellow"));
-        document = document.add(line(shape[i][5], shape[(i+1)%MAX_EDGES][5], "green"));
-        document = document.add(line(shape[i][6], shape[(i+1)%MAX_EDGES][6], "brown"));
-        document = document.add(line(shape[i][7], shape[(i+1)%MAX_EDGES][7], "grey"));
+        for j in 0..max_steps {
+                document = document.add(line(shape[i][j], shape[(i+2)%MAX_EDGES][max_steps-j], "blue"));
+        }
     }
     svg::save("images/shapegrid.svg", &document).unwrap();
 }
