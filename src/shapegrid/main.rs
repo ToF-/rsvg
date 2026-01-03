@@ -4,8 +4,8 @@ use svg::node::element::Path;
 use svg::node::element::path::Data;
 use svg::node::element::Line;
 
-const MAX_EDGES: usize = 5;
-const MAX_STEPS: usize = 4;
+const MAX_EDGES: usize = 4;
+const MAX_STEPS: usize = 2;
 
 type Point = (f64, f64);
 
@@ -16,6 +16,28 @@ pub fn mid_point(a: Point, b: Point) -> Point {
     (x,y)
 }
 
+
+pub fn mid_points(level: usize, a: Point, b: Point) -> Vec<Point> {
+    let mut points: Vec<Point> = vec![];
+    let m = mid_point(a, b);
+    if level > 0 {
+        points.append(&mut mid_points(level - 1, a, m));
+    }
+    points.push(m);
+    if level > 0 {
+        points.append(&mut mid_points(level - 1, m, b));
+    }
+    points
+}
+
+pub fn line_points(level: usize, a: Point, b: Point) ->Vec<Point> {
+    let mut points: Vec<Point> = vec![];
+    points.push(a);
+    points.append(&mut mid_points(level, a, b));
+    points.push(b);
+    points
+}
+
 pub fn shape(xc: f64, yc: f64, length: f64, start_angle: f64) -> Vec<Vec<Point>> {
     let mut points: Vec<Vec<Point>> = vec![];
     let mut alpha: f64 = start_angle;
@@ -23,19 +45,13 @@ pub fn shape(xc: f64, yc: f64, length: f64, start_angle: f64) -> Vec<Vec<Point>>
     for _ in 0..MAX_EDGES {
         let p = alpha.sin_cos();
         let q = (alpha + THETA).sin_cos();
-        let mut pts: Vec<Point> = vec![];
         let mut l: f64 = 0.0;
         let x0 = xc + length * p.1;
         let y0 = yc + length * p.0;
         let x1 = xc + length * q.1;
         let y1 = yc + length * q.0;
-        let dx = x1 - x0;
-        let dy = y1 - y0;
-        let d = f64::sqrt(dx*dx + dy*dy);
-        pts.push((x0,y0));
-        pts.push(mid_point((x0,y0),(x1,y1)));
-        pts.push(mid_point((x0,y0),mid_point((x0,y0),(x1,y1))));
-        pts.push(mid_point(mid_point((x0,y0),(x1,y1)), (x1,y1)));
+        let pts: Vec<Point> = line_points(2, (x0,y0), (x1,y1));
+        println!("{:?}", pts);
         alpha += THETA;
         points.push(pts);
     }
@@ -71,7 +87,7 @@ fn main() {
     let x0 = 500.0;
     let y0 = 500.0;
     let length = 400.0;
-    const START_ANGLE: f64 = 0.0;
+    const START_ANGLE: f64 = PI / 4.0; 
     let shape = shape(x0, y0, length, START_ANGLE);
     let mut document = Document::new()
         .set("viewBox", (0, 0, 1000, 1000));
@@ -81,13 +97,14 @@ fn main() {
     }
     document = document.add(line_path(global, "green"));
     for i in 0..MAX_EDGES {
-        for j in 0..MAX_STEPS {
-            for k in 0..MAX_STEPS {
-                for l in 0..MAX_EDGES {
-                    document = document.add(line(shape[i][j], shape[l][k], "blue"));
-                    }
-            }
-        }
+        document = document.add(line(shape[i][0], shape[(i+1)%MAX_EDGES][0], "blue"));
+        document = document.add(line(shape[i][1], shape[(i+1)%MAX_EDGES][1], "purple"));
+        document = document.add(line(shape[i][2], shape[(i+1)%MAX_EDGES][2], "red"));
+        document = document.add(line(shape[i][3], shape[(i+1)%MAX_EDGES][3], "orange"));
+        document = document.add(line(shape[i][4], shape[(i+1)%MAX_EDGES][4], "yellow"));
+        document = document.add(line(shape[i][5], shape[(i+1)%MAX_EDGES][5], "green"));
+        document = document.add(line(shape[i][6], shape[(i+1)%MAX_EDGES][6], "brown"));
+        document = document.add(line(shape[i][7], shape[(i+1)%MAX_EDGES][7], "grey"));
     }
     svg::save("images/shapegrid.svg", &document).unwrap();
 }

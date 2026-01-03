@@ -4,11 +4,11 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-MAX_STEPS	/Users/tof/Coding/rsvg/src/hexagrid/main.rs	/^    const MAX_STEPS: usize = 32;$/;"	c
-Point	/Users/tof/Coding/rsvg/src/hexagrid/main.rs	/^type Point = (f64, f64);$/;"	T
-START_ANGLE	/Users/tof/Coding/rsvg/src/hexagrid/main.rs	/^    const START_ANGLE: f64 = 0.0;$/;"	c
-THETA	/Users/tof/Coding/rsvg/src/hexagrid/main.rs	/^const THETA: f64 = 60.0_f64.to_radians();$/;"	c
-hexagon	/Users/tof/Coding/rsvg/src/hexagrid/main.rs	/^pub fn hexagon(x: f64, y: f64, radius: f64, start_angle: f64) -> Vec<Point> {$/;"	f
-line	/Users/tof/Coding/rsvg/src/hexagrid/main.rs	/^pub fn line(a: Point, b: Point, color: &str) -> Line {$/;"	f
-line_path	/Users/tof/Coding/rsvg/src/hexagrid/main.rs	/^pub fn line_path(points: Vec<Point>, color: &str) -> Path {$/;"	f
-main	/Users/tof/Coding/rsvg/src/hexagrid/main.rs	/^fn main() {$/;"	f
+MAX_STEPS	/Users/christophethibaut/Coding/rsvg/src/hexagrid/main.rs	/^    const MAX_STEPS: usize = 32;$/;"	c
+Point	/Users/christophethibaut/Coding/rsvg/src/hexagrid/main.rs	/^type Point = (f64, f64);$/;"	T
+START_ANGLE	/Users/christophethibaut/Coding/rsvg/src/hexagrid/main.rs	/^    const START_ANGLE: f64 = 0.0;$/;"	c
+THETA	/Users/christophethibaut/Coding/rsvg/src/hexagrid/main.rs	/^const THETA: f64 = 60.0_f64.to_radians();$/;"	c
+hexagon	/Users/christophethibaut/Coding/rsvg/src/hexagrid/main.rs	/^pub fn hexagon(x: f64, y: f64, radius: f64, start_angle: f64) -> Vec<Point> {$/;"	f
+line	/Users/christophethibaut/Coding/rsvg/src/hexagrid/main.rs	/^pub fn line(a: Point, b: Point, color: &str) -> Line {$/;"	f
+line_path	/Users/christophethibaut/Coding/rsvg/src/hexagrid/main.rs	/^pub fn line_path(points: Vec<Point>, color: &str) -> Path {$/;"	f
+main	/Users/christophethibaut/Coding/rsvg/src/hexagrid/main.rs	/^fn main() {$/;"	f
