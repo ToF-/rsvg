@@ -1,7 +1,4 @@
-use std::f64::consts::PI;
 use svg::Document;
-
-use svg::node::element::Circle;
 use svg::node::element::Path;
 use svg::node::element::path::Data;
 
@@ -63,7 +60,6 @@ pub fn arcs_path(points: Vec<Point>, arc_radius: f64, color: &str) -> Path {
 }
 
 fn main() {
-    let mut document = Document::new().set("viewBox", (0, 0, 1000, 1000));
     let x0 = 500.0;
     let y0 = 500.0;
     let circum_radius = 100.0;

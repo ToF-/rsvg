@@ -1,22 +1,8 @@
-
 use rand::Rng; // provides the `random` method
 use std::f64::consts::PI;
 use svg::Document;
-
-use svg::node::element::Circle;
 use svg::node::element::Path;
 use svg::node::element::path::Data;
-
-fn make_circle(x: i64, y: i64, radius: i64) -> Circle {
-    let circle = Circle::new()
-        .set("fill", "none")
-        .set("stroke", "black")
-        .set("stroke-width", 1)
-        .set("r", radius)
-        .set("cx", x)
-        .set("cy", y);
-    circle.clone()
-}
 
 fn nail(x0: f64, y0: f64, l: f64, a: f64) -> Path {
     let x1 = x0 + l * f64::cos(a);

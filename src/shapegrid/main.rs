@@ -1,4 +1,5 @@
 use std::f64::consts::PI;
+use clap::Parser;
 use svg::Document;
 use svg::node::element::Path;
 use svg::node::element::path::Data;
@@ -7,6 +8,17 @@ use svg::node::element::Line;
 const MAX_EDGES: usize = 6;
 const MAX_STEPS: usize = 2;
 const LEVEL: u32 = 1;
+
+#[derive(Parser, Clone, Debug, PartialEq)]
+pub struct Args {
+    /// number of edges of the shape
+    #[arg(short, long, value_name = "EDGES")]
+    pub edges: usize,
+
+    /// number of divisions of an edge
+    #[arg(short, long, value_name = "LEVEL")]
+    pub level: usize,
+}
 
 type Point = (f64, f64);
 
@@ -85,25 +97,27 @@ pub fn line(a: Point, b: Point, color: &str) -> Line {
 
 
 fn main() {
-    let x0 = 500.0;
-    let y0 = 500.0;
-    let length = 400.0;
-    const START_ANGLE: f64 = PI / 4.0; 
-    let shape = shape(x0, y0, length, START_ANGLE);
-    let mut document = Document::new()
-        .set("viewBox", (0, 0, 1000, 1000));
-    let mut global: Vec<Point> = vec![];
-    for i in 0..MAX_EDGES {
-        global.push(shape[i][0]);
-    }
-    let base: usize = 2;
-    let max_steps = base.pow(LEVEL + 1);
-    document = document.add(line_path(global, "green"));
-    for i in 0..MAX_EDGES {
-        for j in 0..max_steps {
-                document = document.add(line(shape[i][j], shape[(i+2)%MAX_EDGES][max_steps-j], "blue"));
+    let result = Args::parse().and_then(|args| {
+        let x0 = 500.0;
+        let y0 = 500.0;
+        let length = 400.0;
+        const START_ANGLE: f64 = PI / 4.0; 
+        let shape = shape(x0, y0, length, START_ANGLE);
+        let mut document = Document::new()
+            .set("viewBox", (0, 0, 1000, 1000));
+        let mut global: Vec<Point> = vec![];
+        for i in 0..MAX_EDGES {
+            global.push(shape[i][0]);
         }
-    }
-    svg::save("images/shapegrid.svg", &document).unwrap();
+        let base: usize = 2;
+        let max_steps = base.pow(LEVEL + 1);
+        document = document.add(line_path(global, "green"));
+        for i in 0..MAX_EDGES {
+            for j in 0..max_steps {
+                document = document.add(line(shape[i][j], shape[(i+2)%MAX_EDGES][max_steps-j], "blue"));
+            }
+        }
+        svg::save("images/shapegrid.svg", &document).unwrap();
+    });
 }
 
