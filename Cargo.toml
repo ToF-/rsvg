@@ -24,3 +24,7 @@ path = "src/hexagrid/main.rs"
 name = "shapegrid"
 path = "src/shapegrid/main.rs"
 
+[[bin]]
+name = "circles"
+path = "src/circles/main.rs"
+
