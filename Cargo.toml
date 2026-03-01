@@ -28,3 +28,7 @@ path = "src/shapegrid/main.rs"
 name = "circles"
 path = "src/circles/main.rs"
 
+[[bin]]
+name = "triangles"
+path = "src/triangles/main.rs"
+
